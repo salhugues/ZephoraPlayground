@@ -10,6 +10,10 @@ kotlinxSerializationJsonVersion = "1.6.0"
 # Retrofit
 retrofitVersion = "2.9.0"
 retrofit2KotlinxSerializationConverterVersion = "1.0.0"
+loggingInterceptorVersion = "4.9.1"
+
+#Room
+roomVersion = "2.5.2"
 
 # Test
 junitVersion = "4.13.2"
@@ -23,9 +27,18 @@ koinAndroid = { module = "io.insert-koin:koin-android", version.ref = "koinAndro
 appCompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompatVersion" }
 material = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayoutVersion" }
+
+# Serializer
 kotlinxSerializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJsonVersion" }
-retrofitConverter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2KotlinxSerializationConverterVersion" }
+
+# Retrofit
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
+retrofitConverter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2KotlinxSerializationConverterVersion" }
+loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptorVersion" }
+
+# Room
+roomKtx = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
+roomRuntime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
 
 #Test libs
 junit = { module = "junit:junit", version.ref = "junitVersion" }

@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id ("kotlin-parcelize")
 }
 
 android {
@@ -45,6 +46,12 @@ dependencies {
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofitConverter)
+
+    implementation(libs.loggingInterceptor)
+
+    // Room
+    implementation(libs.roomRuntime)
+    implementation(libs.roomKtx)
 
     // DI
     implementation(libs.koinAndroid)
