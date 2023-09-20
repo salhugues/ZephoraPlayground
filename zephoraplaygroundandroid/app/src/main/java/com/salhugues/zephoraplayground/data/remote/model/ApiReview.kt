@@ -1,10 +1,9 @@
-package com.salhugues.zephoraplayground.domain.model
+package com.salhugues.zephoraplayground.data.remote.model
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DmReview(
-    val productId: Long?,
+data class ApiReview(
     val name: String?,
     val text: String?,
     val rating: Float?

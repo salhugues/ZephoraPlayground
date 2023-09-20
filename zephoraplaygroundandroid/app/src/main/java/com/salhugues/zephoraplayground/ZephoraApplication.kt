@@ -13,7 +13,7 @@ class ZephoraApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@ZephoraApplication)
-            ZephoraDI.loadModules()
+            modules(ZephoraDI.loadModules())
         }
     }
 }

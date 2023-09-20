@@ -19,6 +19,7 @@ roomVersion = "2.5.2"
 junitVersion = "4.13.2"
 androidjunitTestVersion = "1.1.5"
 espressoVersion = "3.5.1"
+org-jetbrains-kotlin-android = "1.9.0"
 
 [libraries]
 coreKtx = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
@@ -46,5 +47,6 @@ junitAndroid = { module = "androidx.test.ext:junit", version.ref = "androidjunit
 espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoVersion" }
 
 [plugins]
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
 
 [bundles]

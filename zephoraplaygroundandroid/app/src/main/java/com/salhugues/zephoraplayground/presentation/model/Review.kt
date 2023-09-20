@@ -1,10 +1,11 @@
 package com.salhugues.zephoraplayground.presentation.model
 
-import kotlinx.serialization.Serializable
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-@Serializable
+@Parcelize
 data class Review(
-    val productId: Long?,
-    val hide: Boolean?,
-    val reviews: List<Review>?
-)
+    val name: String?,
+    val text: String?,
+    val rating: Float?
+) : Parcelable
