@@ -9,7 +9,7 @@ data class ApiProduct(
     @SerialName("product_name") val productName: String?,
     @SerialName("description") val description: String?,
     @SerialName("price") val price: Float?,
-    @SerialName("image_url") val imageUrl: ApiImageUrl?,
+    @SerialName("images_url") val imageUrl: ApiImageUrl?,
     @SerialName("c_brand") val brand: ApiBrand?,
     @SerialName("is_productSet") val isProductSet: Boolean?,
     @SerialName("is_special_brand") val isSpecialBrand: Boolean?

@@ -1,7 +1,6 @@
 package com.salhugues.zephoraplayground.di
 
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.salhugues.zephoraplayground.data.local.datasource.LocalProductDatasource
 import com.salhugues.zephoraplayground.data.local.datasource.LocalReviewDatasource
@@ -11,19 +10,20 @@ import com.salhugues.zephoraplayground.data.remote.datasource.RemoteProductDatas
 import com.salhugues.zephoraplayground.data.remote.datasource.RemoteReviewDatasource
 import com.salhugues.zephoraplayground.data.repository.ProductRepository
 import com.salhugues.zephoraplayground.data.repository.ReviewRepository
-import com.salhugues.zephoraplayground.domain.usecase.GetProductFormatterUseCase
+import com.salhugues.zephoraplayground.domain.usecase.GetProductsFormatterUseCase
 import com.salhugues.zephoraplayground.domain.usecase.GetProductsUseCase
+import com.salhugues.zephoraplayground.domain.usecase.GetReviewsUseCase
 import com.salhugues.zephoraplayground.domain.usecase.SyncDataUseCase
 import com.salhugues.zephoraplayground.misc.Constants.BASE_URL
 import com.salhugues.zephoraplayground.misc.Constants.DATABASE_NAME
 import com.salhugues.zephoraplayground.misc.Constants.DISPATCHER_IO
-import com.salhugues.zephoraplayground.presentation.splash.SplashScreenActivity
 import kotlinx.coroutines.Dispatchers
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -34,16 +34,7 @@ object ZephoraDI {
         buildLocalModule(),
         buildRemoteModule(),
         buildAppModule(),
-        buildActivityModule()
     )
-
-    private fun buildActivityModule() = module {
-        scope<SplashScreenActivity> {
-            scoped {
-                SyncDataUseCase(get(), get(), get())
-            }
-        }
-    }
 
     private fun buildAppModule() = module {
         single(qualifier = named(DISPATCHER_IO)) { Dispatchers.IO }
@@ -53,16 +44,26 @@ object ZephoraDI {
         single { ReviewRepository(get(), get()) }
 
         // Use cases
-        single { SyncDataUseCase(get(), get(), get()) }
-        singleOf(::GetProductFormatterUseCase)
-        singleOf(::GetProductsUseCase)
+        single { SyncDataUseCase(get(), get(), get(qualifier = named(DISPATCHER_IO))) }
+        singleOf(::GetProductsFormatterUseCase)
+        singleOf(::GetReviewsUseCase)
+        single {
+            GetProductsUseCase(
+                productRepository = get(),
+                reviewRepository = get(),
+                dispatcher = get(qualifier = named(DISPATCHER_IO)),
+                uiProductFormatterUseCase = get()
+            )
+        }
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     private fun buildRemoteModule() = module {
-        // retrofit
+        // Retrofit
         single<ApiClient> {
             val json = Json {
                 ignoreUnknownKeys = true
+                explicitNulls = false
             }
 
             val converter = json.asConverterFactory("application/json".toMediaType())
@@ -86,10 +87,10 @@ object ZephoraDI {
     }
 
     private fun buildLocalModule() = module {
-        // room database
+        // Room database
         single {
             Room.databaseBuilder(
-                androidApplication(),
+                androidContext(),
                 ZephoraDatabase::class.java,
                 DATABASE_NAME
             ).build()

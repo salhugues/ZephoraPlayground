@@ -3,6 +3,7 @@ package com.salhugues.zephoraplayground.data.local.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "Review",
@@ -14,6 +15,7 @@ import androidx.room.ForeignKey
     )]
 )
 data class DbReview(
+    @PrimaryKey
     @ColumnInfo(name = "relProductId")
     val reviewId: Long?,
     @ColumnInfo(name = "name")

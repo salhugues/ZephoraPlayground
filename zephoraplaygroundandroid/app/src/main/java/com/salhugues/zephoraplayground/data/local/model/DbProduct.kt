@@ -2,10 +2,11 @@ package com.salhugues.zephoraplayground.data.local.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Entity(tableName = "Product")
 data class DbProduct(
-    @ColumnInfo(name = "productId") val productId: Long?,
+    @PrimaryKey @ColumnInfo(name = "productId") val productId: Long?,
     @ColumnInfo(name = "productName") val productName: String?,
     @ColumnInfo(name = "description") val description: String?,
     @ColumnInfo(name = "price") val price: Float?,

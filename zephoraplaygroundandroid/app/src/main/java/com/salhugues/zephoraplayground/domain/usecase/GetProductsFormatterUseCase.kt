@@ -5,7 +5,7 @@ import com.salhugues.zephoraplayground.domain.model.DmReview
 import com.salhugues.zephoraplayground.presentation.model.Product
 import com.salhugues.zephoraplayground.presentation.model.Review
 
-class GetProductFormatterUseCase {
+class GetProductsFormatterUseCase {
     operator fun invoke(
         dmProducts: List<DmProduct>,
         dmReviews: List<DmReview>

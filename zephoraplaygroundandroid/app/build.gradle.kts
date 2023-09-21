@@ -1,7 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.serialization")
     id ("kotlin-parcelize")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -55,6 +57,8 @@ dependencies {
     // Room
     implementation(libs.roomRuntime)
     implementation(libs.roomKtx)
+    ksp(libs.roomCompiler)
+
 
     // DI
     implementation(libs.koinAndroid)

@@ -7,7 +7,7 @@ import com.salhugues.zephoraplayground.data.local.dao.ReviewDao
 import com.salhugues.zephoraplayground.data.local.model.DbProduct
 import com.salhugues.zephoraplayground.data.local.model.DbReview
 
-@Database(entities = arrayOf(DbProduct::class, DbReview::class), version = 1, exportSchema = false)
+@Database(entities = [DbProduct::class, DbReview::class], version = 1, exportSchema = false)
 abstract class ZephoraDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
     abstract fun reviewDao(): ReviewDao

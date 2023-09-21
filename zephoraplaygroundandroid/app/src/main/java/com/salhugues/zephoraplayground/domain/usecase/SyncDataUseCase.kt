@@ -16,21 +16,31 @@ class SyncDataUseCase(
     suspend operator fun invoke(): ResultState<Boolean> {
         return withContext(dispatcher) {
 
-            val productResult = async { productRepository.getProducts() }.await()
+            val localProductResult = async { productRepository.getLocalProducts() }.await()
+            val localReviewResult = async { reviewRepository.getLocalReviews() }.await()
+            val isAlreadySynced =
+                localProductResult.isNotEmpty() && localReviewResult.isNotEmpty()
 
-            if (productResult.status == Status.SUCCESS && !productResult.data.isNullOrEmpty()) {
-                productRepository.saveAllProducts(productResult.data) // We save product
-                val reviewResult = async {  reviewRepository.getReviews() }.await() // We execute the second request
-
-                if (reviewResult.status == Status.SUCCESS && !reviewResult.data.isNullOrEmpty()) {
-                    // save reviews in local database
-                    reviewRepository.saveAllReviews(reviewResult.data)
-                    ResultState.success(true)
-                } else {
-                    ResultState.error("Error with reviews", false)
-                }
+            if (isAlreadySynced) {
+                ResultState.success(true)
             } else {
-                ResultState.error("Error with products", false)
+                val productResult = async { productRepository.getProducts() }.await()
+
+                if (productResult.status == Status.SUCCESS && !productResult.data.isNullOrEmpty()) {
+                    productRepository.saveAllProducts(productResult.data) // We save product
+                    val reviewResult =
+                        async { reviewRepository.getReviews() }.await() // We execute the second request
+
+                    if (reviewResult.status == Status.SUCCESS && !reviewResult.data.isNullOrEmpty()) {
+                        // save reviews in local database
+                        reviewRepository.saveAllReviews(reviewResult.data)
+                        ResultState.success(true)
+                    } else {
+                        ResultState.error("Error with reviews", false)
+                    }
+                } else {
+                    ResultState.error("Error with products", false)
+                }
             }
         }
     }

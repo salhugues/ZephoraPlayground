@@ -12,6 +12,9 @@ class ProductRepository(
     suspend fun getProducts(): ResultState<List<DmProduct>> =
         remoteDatasource.getAllProduct()
 
+    suspend fun getLocalProducts(): List<DmProduct> =
+        localDatasource.getAllProducts()
+
     suspend fun saveAllProducts(products: List<DmProduct>) =
         localDatasource.insertAllProducts(products)
 

@@ -11,15 +11,11 @@ import com.salhugues.zephoraplayground.presentation.home.HomeActivity
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import org.koin.android.scope.AndroidScopeComponent
-import org.koin.androidx.scope.activityScope
-import org.koin.core.scope.Scope
 
 @SuppressLint("CustomSplashScreen")
-class SplashScreenActivity : AppCompatActivity(), AndroidScopeComponent {
+class SplashScreenActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashscreenBinding
-    override val scope: Scope by activityScope()
     private val syncDataUseCase by inject<SyncDataUseCase>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +28,9 @@ class SplashScreenActivity : AppCompatActivity(), AndroidScopeComponent {
             }.await()
 
             if (syncDataResult.data == true) {
-                startActivity(Intent(this@SplashScreenActivity, HomeActivity::class.java))
+                startActivity(
+                    Intent(this@SplashScreenActivity, HomeActivity::class.java)
+                )
             }
         }
     }
