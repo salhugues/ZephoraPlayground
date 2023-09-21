@@ -8,6 +8,8 @@ import com.salhugues.zephoraplayground.data.local.room.ZephoraDatabase
 import com.salhugues.zephoraplayground.data.remote.api.ApiClient
 import com.salhugues.zephoraplayground.data.remote.datasource.RemoteProductDatasource
 import com.salhugues.zephoraplayground.data.remote.datasource.RemoteReviewDatasource
+import com.salhugues.zephoraplayground.data.repository.IProductRepository
+import com.salhugues.zephoraplayground.data.repository.IReviewRepository
 import com.salhugues.zephoraplayground.data.repository.ProductRepository
 import com.salhugues.zephoraplayground.data.repository.ReviewRepository
 import com.salhugues.zephoraplayground.domain.usecase.GetProductsFormatterUseCase
@@ -26,6 +28,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
@@ -40,8 +43,8 @@ object ZephoraDI {
         single(qualifier = named(DISPATCHER_IO)) { Dispatchers.IO }
 
         // Repositories
-        single { ProductRepository(get(), get()) }
-        single { ReviewRepository(get(), get()) }
+        single { ProductRepository(get(), get()) } bind IProductRepository::class
+        single { ReviewRepository(get(), get()) } bind IReviewRepository::class
 
         // Use cases
         single { SyncDataUseCase(get(), get(), get(qualifier = named(DISPATCHER_IO))) }

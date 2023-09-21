@@ -8,14 +8,14 @@ import com.salhugues.zephoraplayground.misc.ResultState
 class ReviewRepository(
     private val remoteDatasource: RemoteReviewDatasource,
     private val localDatasource: LocalReviewDatasource
-) {
-    suspend fun getReviews(): ResultState<List<DmReview>> =
+) : IReviewRepository {
+    override suspend fun getReviews(): ResultState<List<DmReview>> =
         remoteDatasource.getAllReviews()
 
-    fun getLocalReviews(): List<DmReview> =
+    override fun getLocalReviews(): List<DmReview> =
         localDatasource.getAllReviews()
 
-    suspend fun saveAllReviews(reviews: List<DmReview>) {
+    override suspend fun saveAllReviews(reviews: List<DmReview>) {
         localDatasource.insertAllReviews(reviews)
     }
 }

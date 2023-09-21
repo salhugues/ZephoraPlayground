@@ -8,14 +8,14 @@ import com.salhugues.zephoraplayground.misc.ResultState
 class ProductRepository(
     private val remoteDatasource: RemoteProductDatasource,
     private val localDatasource: LocalProductDatasource
-) {
-    suspend fun getProducts(): ResultState<List<DmProduct>> =
+) : IProductRepository {
+    override suspend fun getProducts(): ResultState<List<DmProduct>> =
         remoteDatasource.getAllProduct()
 
-    suspend fun getLocalProducts(): List<DmProduct> =
+    override fun getLocalProducts(): List<DmProduct> =
         localDatasource.getAllProducts()
 
-    suspend fun saveAllProducts(products: List<DmProduct>) =
+    override suspend fun saveAllProducts(products: List<DmProduct>) {
         localDatasource.insertAllProducts(products)
-
+    }
 }
