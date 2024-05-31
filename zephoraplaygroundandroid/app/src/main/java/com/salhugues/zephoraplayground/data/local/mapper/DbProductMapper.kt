@@ -5,29 +5,29 @@ import com.salhugues.zephoraplayground.domain.model.DmProduct
 import com.salhugues.zephoraplayground.misc.TwoWayMapper
 
 internal object DbProductMapper : TwoWayMapper<DbProduct, DmProduct> {
-    override fun transform(dbProduct: DbProduct): DmProduct {
+    override fun transform(item: DbProduct): DmProduct {
         return DmProduct(
-            productId = dbProduct.productId,
-            productName = dbProduct.productName,
-            description = dbProduct.description,
-            price = dbProduct.price,
-            imageUrl = dbProduct.imageUrl,
-            brand = dbProduct.brand,
-            isProductSet = dbProduct.isProductSet,
-            isSpecialBrand = dbProduct.isSpecialBrand
+            productId = item.productId,
+            productName = item.productName,
+            description = item.description,
+            price = item.price,
+            imageUrl = item.imageUrl,
+            brand = item.brand,
+            isProductSet = item.isProductSet,
+            isSpecialBrand = item.isSpecialBrand
         )
     }
 
-    override fun revert(product: DmProduct): DbProduct {
+    override fun revert(item: DmProduct): DbProduct {
         return DbProduct(
-            productId = product.productId,
-            productName = product.productName,
-            description = product.description,
-            price = product.price,
-            imageUrl = product.imageUrl,
-            brand = product.brand,
-            isProductSet = product.isProductSet,
-            isSpecialBrand = product.isSpecialBrand
+            productId = item.productId,
+            productName = item.productName,
+            description = item.description,
+            price = item.price,
+            imageUrl = item.imageUrl,
+            brand = item.brand,
+            isProductSet = item.isProductSet,
+            isSpecialBrand = item.isSpecialBrand
         )
     }
 }
